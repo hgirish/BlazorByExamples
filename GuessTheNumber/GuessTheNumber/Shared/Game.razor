@@ -3,7 +3,14 @@
     <strong>Guess the number</strong>
     <div class="match-val">correct digit</div>
     <div class="match-pos">correct position</div>
-    <div>digits: @digitCount</div>
+    <div>digits: 
+        <input type="number"
+            value="@digitCount"
+            inputmode="numeric"
+            min="1" 
+            max="10"
+            @onchange="RestartGame" />
+    </div>
     <hr/>
     @if (guesses == null)
     {

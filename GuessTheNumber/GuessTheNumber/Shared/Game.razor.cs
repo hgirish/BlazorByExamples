@@ -66,13 +66,14 @@ public partial class Game
             }
         }
         guesses.Add(curGuess);
-        guess = "";
+       
         if (guess == answer)
         {
             winner = true;
         }
 
         logger!.LogInformation(JsonSerializer.Serialize(guesses));
+        guess = "";
     }
 
     private void PlayAgain()
@@ -80,6 +81,12 @@ public partial class Game
         winner = false;
         guesses = new();
         CalculateAnswer();
+    }
+
+    private void RestartGame(ChangeEventArgs e)
+    {
+        digitCount = Convert.ToInt16(e.Value);
+        PlayAgain();
     }
 
     public class Row
