@@ -1,11 +1,16 @@
 ﻿@page "/"
 
 @using WeatherForecast.Models
+@using System.Text
+@using WeatherForecast.Shared
 @inject IJSRuntime js
+@inject HttpClient Http
+@inject IConfiguration Configuration
 
 <PageTitle>Weather Forecast</PageTitle>
 
-@if (pos == null)
+
+@if (forecast == null)
 {
     <p><em>@message</em></p>
 } 
@@ -15,20 +20,36 @@ else
         Latitude: @pos.Latitude,
         Longitude: @pos.Longitude
     </h2>
+    <div class="card-group">
+        @foreach (var item in forecast.Daily.Take(5))
+        {
+            <DailyForecast
+                Seconds="@item.Dt"
+                LowTemp="@item.Temp.Min"
+                HighTemp="@item.Temp.Max"
+                Description="@item.Weather[0].Description"
+                Icon="@item.Weather[0].Icon" />
+        }
+    </div>
 }
 
 @code{
+    OpenWeather? forecast;
     string message = "Loading...";
     Position? pos;
-
+    private string apiKey = string.Empty;
     protected override async Task OnInitializedAsync()
     {
+        apiKey =  Configuration["OpenWeatherApiKey"];
+        Console.WriteLine("API Key: " + apiKey);
         try
         {
             await GetPositionAsync();
+            await GetForecastAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             message = "Geolocation is not supported.";
         }
     }   
@@ -36,5 +57,26 @@ else
     private async Task GetPositionAsync()
     {
         pos = await js.InvokeAsync<Position>("bweInterop.getPosition");
+    }
+
+    private async Task GetForecastAsync()
+    {
+        if (pos != null)
+        {
+            string APIKey = apiKey;
+            StringBuilder url = new StringBuilder();
+            url.Append("https://api.openweathermap.org");
+            url.Append("/data/2.5/oncecall?");
+            url.Append("lat=");
+            url.Append(pos.Latitude);
+            url.Append("&lon=");
+            url.Append(pos.Longitude);
+            url.Append("&exclude-");
+            url.Append("current,minutely,hourly,alerts");
+            url.Append("&units=imperial");
+            url.Append("&appid=");
+            url.Append(APIKey);
+            forecast = await Http.GetFromJsonAsync<OpenWeather>(url.ToString());
+        }
     }
 }
