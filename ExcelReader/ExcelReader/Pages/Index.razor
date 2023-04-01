@@ -56,7 +56,11 @@
                     </tbody>
                 </table>
             </div>
-        }}
+            }}
+    }
+    else
+    {
+        <p>@errorMessage</p>
     }
 }
 
@@ -73,6 +77,8 @@
     {
         file = e.File;
         errorMessage = null;
+        loaded = false;
+        readFileClicked = false;
         if ((file.Size >= MAXFILESIZE) || (file.ContentType != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
         {
             errorMessage = "Invalid file";
@@ -97,7 +103,11 @@
             .Descendants<Sheet>()
             .Where(s => s.Name == "olympic_medals")
             .FirstOrDefault();
-
+            if (sheet == null)
+            {
+                errorMessage = "Invalid Excel file. Choose file with 'olympic_medals' sheet.";
+                return;
+            }
             WorksheetPart wsPart =
             (WorksheetPart)(wbPart.GetPartById(sheet.Id));
 
@@ -161,7 +171,7 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex);
             errorMessage = "Invalid Excel file";
         }
     }
