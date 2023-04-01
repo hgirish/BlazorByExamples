@@ -1,3 +1,53 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+
+<PageTitle>Kanban Board</PageTitle>
+
+<div class="row">
+    <DropZone Priority="TaskPriority.High"
+    TaskItems="TaskItems"
+    OnDrop="OnDrop"
+    OnStartDrag="OnStartDrag" />
+    <DropZone Priority="TaskPriority.Mid"
+              TaskItems="TaskItems"
+              OnDrop="OnDrop"
+              OnStartDrag="OnStartDrag" />
+    <DropZone Priority="TaskPriority.Low"
+              TaskItems="TaskItems"
+              OnDrop="OnDrop"
+              OnStartDrag="OnStartDrag" />
+</div>
+
+@code {
+    public TaskItem? CurrentItem;
+    List<TaskItem> TaskItems = new();
+
+    protected override void OnInitialized()
+    {
+        TaskItems.Add(new TaskItem
+            {
+                TaskName = "Call Mom",
+                Priority = TaskPriority.High
+            });
+        TaskItems.Add(new TaskItem
+            {
+                TaskName = "Buy Milk",
+                Priority = TaskPriority.Mid
+            });
+        TaskItems.Add(new TaskItem
+            {
+                TaskName = "Exercise",
+                Priority = TaskPriority.Low
+            });
+    }
+
+    private void OnStartDrag(TaskItem item)
+    {
+        CurrentItem = item;
+    }
+
+    private void OnDrop(TaskPriority priority)
+    {
+        CurrentItem!.Priority = priority;
+    }
+}
