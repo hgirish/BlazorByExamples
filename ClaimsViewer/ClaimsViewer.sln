@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClaimsViewer", "ClaimsViewer\ClaimsViewer.csproj", "{B8C83BA2-D499-4EAA-98B8-604BD49C050A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8C83BA2-D499-4EAA-98B8-604BD49C050A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8C83BA2-D499-4EAA-98B8-604BD49C050A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8C83BA2-D499-4EAA-98B8-604BD49C050A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8C83BA2-D499-4EAA-98B8-604BD49C050A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {161117D0-2C35-4F14-8B98-471F0392E96B}
+	EndGlobalSection
+EndGlobal
