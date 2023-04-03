@@ -1,0 +1,26 @@
+﻿@page "/"
+
+@if (_tasks == null)
+{
+    <p><em>Loading...</em></p>
+}else
+{
+    @foreach (var taskItem in _tasks)
+    {
+        <div class="d-flex col-md-6 mx-auto border-bottom"
+        @key="taskItem">
+        <div class="p-2 flex-fill">
+            <input type="checkbox"
+                checked="@taskItem.IsComplete" />
+                <span>@taskItem.TaskName</span>
+        </div>
+        <div class="p-1">
+            <button type="button"
+                class="btn btn-outline-danger btn-sm"
+                title="Delete task">
+                <span class="bi bi-trash"></span>
+            </button>
+        </div>
+        </div>
+    }
+}
