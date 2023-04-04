@@ -12,6 +12,7 @@ public partial class Index
 
     private IList<TaskItem>?   _tasks;
     private string? error;
+    private string? newTask;
 
     protected override async Task OnInitializedAsync()
     {
@@ -51,7 +52,31 @@ public partial class Index
         {
             error = response.ReasonPhrase;
         }
+    }
+    private async Task AddTask()
+    {
+        if (!string.IsNullOrWhiteSpace(newTask))
+        {
+            TaskItem newTaskItem = new TaskItem
+            {
+                TaskName = newTask,
+                IsComplete = false
+            };
 
+            _tasks.Add(newTaskItem);
 
+            string requestUri = "api/TaskItems";
+
+            var response = await Http.PostAsJsonAsync(requestUri,newTaskItem);
+
+            if (response.IsSuccessStatusCode)
+            {
+                newTask = string.Empty;
+            }
+            else
+            {
+                error = response.ReasonPhrase;
+            }
+        }
     }
 }

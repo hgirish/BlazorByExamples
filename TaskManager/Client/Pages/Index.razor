@@ -5,6 +5,13 @@
     <p><em>Loading...</em></p>
 }else
 {
+    <div class="d-flex col-md-6 mx-auto py-2">
+        <input type="text"
+            class="form-control m-1"
+            placeholder="Enter task" @bind="newTask" />
+            <button type="button" class="btn btn-success"
+            @onclick="AddTask">Add</button>
+    </div>
     @foreach (var taskItem in _tasks)
     {
         <div class="d-flex col-md-6 mx-auto border-bottom"
