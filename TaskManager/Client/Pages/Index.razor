@@ -11,12 +11,14 @@
         @key="taskItem">
         <div class="p-2 flex-fill">
             <input type="checkbox"
+                @onchange="@(()=> CheckboxChecked(taskItem))"
                 checked="@taskItem.IsComplete" />
-                <span>@taskItem.TaskName</span>
+                <span class="@((taskItem.IsComplete ? "completed-task" : ""))">@taskItem.TaskName</span>
         </div>
         <div class="p-1">
             <button type="button"
                 class="btn btn-outline-danger btn-sm"
+                @onclick="@(()=>DeleteTask(taskItem))"
                 title="Delete task">
                 <span class="bi bi-trash"></span>
             </button>
